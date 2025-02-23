@@ -1,0 +1,81 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class JavaProgram {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
+        System.out.println("Hello " + firstName + " " + lastName);
+
+        System.out.print("Enter first number: ");
+        double num1 = scanner.nextDouble();
+        System.out.print("Enter operator (+, -, *, /): ");
+        char operator = scanner.next().charAt(0);
+        System.out.print("Enter second number: ");
+        double num2 = scanner.nextDouble();
+        double result = 0;
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                if (num2 != 0) {
+                    result = num1 / num2;
+                } else {
+                    System.out.println("Error: Division by zero");
+                    return;
+                }
+                break;
+            default:
+                System.out.println("Error: Invalid operator");
+                return;
+        }
+        System.out.println("The result is: " + result);
+
+
+       
+        System.out.print("Enter a distance in km: ");
+        double km = scanner.nextDouble();
+        double miles = km * 0.621371;
+        System.out.println(km + " km is " + miles + " mi");
+
+        System.out.print("Enter a number: ");
+        int n = scanner.nextInt();
+        System.out.println("Looping through numbers from 1 to " + n + ":");
+        for (int i = 1; i <= n; i++) {
+            System.out.println(i);
+        }
+
+        scanner.nextLine(); 
+        System.out.print("Enter a word: ");
+        String word = scanner.nextLine();
+        String reversedWord = new StringBuilder(word).reverse().toString();
+        System.out.println("The word in reverse order: " + reversedWord);
+
+        scanner.nextLine(); 
+        System.out.print("Enter a message: ");
+        String message = scanner.nextLine();
+        try {
+            FileWriter writer = new FileWriter("target/message.txt");
+            writer.write(message);
+            writer.close();
+            System.out.println("The message is saved in target/message.txt");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+
+        scanner.close();
+        System.out.println("Process finished with exit code 0");
+    }
+}
