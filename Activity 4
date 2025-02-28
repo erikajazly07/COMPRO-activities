@@ -1,0 +1,130 @@
+class Coffee {
+    String name;
+    String type;
+    String size;
+    double price;
+    String roastLevel;
+    String origin;
+    boolean isDecaf;
+    int stock;
+    String[] flavorNotes;
+    String brewMethod;
+
+    public Coffee(String name, String type, String size, double price, String roastLevel, String origin, boolean isDecaf, int stock, String[] flavorNotes, String brewMethod) {
+        this.name = name;
+        this.type = type;
+        this.size = size;
+        this.price = price;
+        this.roastLevel = roastLevel;
+        this.origin = origin;
+        this.isDecaf = isDecaf;
+        this.stock = stock;
+        this.flavorNotes = flavorNotes;
+        this.brewMethod = brewMethod;
+    }
+
+    public double calculatePrice(String size) {
+        if (size.equalsIgnoreCase("Medium")) {
+            return price + 5;
+        } else if (size.equalsIgnoreCase("Large")) {
+            return price + 10;
+        } else {
+            return price;
+        }
+    }
+
+    public boolean checkStock() {
+        return stock > 0;
+    }
+
+    public void addFlavor(String note) {
+        String[] newFlavorNotes = new String[flavorNotes.length + 1];
+        for (int i = 0; i < flavorNotes.length; i++) {
+            newFlavorNotes[i] = flavorNotes[i];
+        }
+        newFlavorNotes[flavorNotes.length] = note;
+        flavorNotes = newFlavorNotes;
+    }
+
+    public void updateStock(int quantity) {
+        this.stock += quantity;
+    }
+
+    public String describe() {
+        String flavorString = "";
+        for (int i = 0; i < flavorNotes.length; i++) {
+            flavorString += flavorNotes[i];
+            if (i < flavorNotes.length - 1) {
+                flavorString += ", ";
+            }
+        }
+        return "A " + roastLevel.toLowerCase() + " roast " + type.toLowerCase() + " coffee, " + name + ", with " + flavorString.toLowerCase() + " notes, brewed using " + brewMethod.toLowerCase() + ". Origin: " + origin + ". Decaf: " + isDecaf + ".";
+    }
+
+    public void setDecaf(boolean isDecaf) {
+        this.isDecaf = isDecaf;
+    }
+
+    public void changeRoastLevel(String newRoastLevel) {
+        this.roastLevel = newRoastLevel;
+    }
+
+    public void discount(double percentage) {
+        this.price = this.price * (1 - (percentage / 100.0));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Coffee coffee1 = new Coffee(
+                "Strawberry Milk",
+                "Flavored Latte",
+                "Small",
+                75.0,
+                "Light",
+                "Local Blend",
+                false,
+                10,
+                new String[]{"Strawberry", "Creamy"},
+                "Espresso"
+        );
+
+        Coffee coffee2 = new Coffee(
+                "Matcha Latte",
+                "Tea Latte",
+                "Medium",
+                80.0,
+                "Medium",
+                "Japan",
+                true,
+                1,
+                new String[]{"Matcha", "Earthy", "Sweet"},
+                "Steamed"
+        );
+
+        System.out.println("Coffee 1: " + coffee1.name);
+        System.out.println("Original Price: " + coffee1.price);
+        System.out.println("Medium Price: " + coffee1.calculatePrice("Medium"));
+        System.out.println("Stock: " + coffee1.checkStock());
+        coffee1.addFlavor("Vanilla");
+        coffee1.updateStock(5);
+        System.out.println("Updated Stock: " + coffee1.stock);
+        System.out.println(coffee1.describe());
+        coffee1.setDecaf(true);
+        System.out.println("Decaf: " + coffee1.isDecaf);
+        coffee1.discount(10);
+        System.out.println("Discounted Price: " + coffee1.price);
+
+        System.out.println("\n---------------------\n");
+
+        System.out.println("Coffee 2: " + coffee2.name);
+        System.out.println("Original Price: " + coffee2.price);
+        System.out.println("Large Price: " + coffee2.calculatePrice("Large"));
+        System.out.println("Stock: " + coffee2.checkStock());
+        coffee2.changeRoastLevel("Dark");
+        System.out.println("New Roast Level: " + coffee2.roastLevel);
+        System.out.println(coffee2.describe());
+        coffee2.discount(20);
+        System.out.println("Discounted Price: " + coffee2.price);
+    }
+}
